@@ -30,16 +30,16 @@
 
 3. **Environment Variables** (Add in Vercel Dashboard):
    \`\`\`
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-   DATABASE_URL=your_database_url
-   DIRECT_URL=your_direct_url
-   NEXTAUTH_SECRET=your_nextauth_secret
-   NEXTAUTH_URL=https://your-domain.vercel.app
+   NEXT_PUBLIC_SUPABASE_URL=https://hqysuzssoovvsokpkcdx.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhxeXN1enNzb292dnNva3BrY2R4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2NjcwMTYsImV4cCI6MjA3MTI0MzAxNn0.tQ2e1WSUj_muZdXIVs-BvQP4Zsc2zMqC7djNIhosMPA
+   SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhxeXN1enNzb292dnNva3BrY2R4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTY2NzAxNiwiZXhwIjoyMDcxMjQzMDE2fQ.WOZSbfdOHDXtZ1AF2f73lmSbQNWtKtoh7H2c-P15drg
+   DATABASE_URL=postgresql://postgres:W5g3n300890@db.hqysuzssoovvsokpkcdx.supabase.co:5432/postgres
+   DIRECT_URL=postgresql://postgres:W5g3n300890@db.hqysuzssoovvsokpkcdx.supabase.co:5432/postgres
+   NEXTAUTH_SECRET=prj_3FEXMp1gtb1LCPSCsxlQfo9iRlJJ
+   NEXTAUTH_URL=https://xn--v0-repositrio-link-nu-ucc.vercel.app/
    NODE_ENV=production
-   NEXT_PUBLIC_APP_URL=https://your-domain.vercel.app
-   FLUE_LIVE_SECRET=your_flue_secret
+   NEXT_PUBLIC_APP_URL=https://xn--v0-repositrio-link-nu-ucc.vercel.app/
+   FLUE_LIVE_SECRET=0637c27d5db14166929dfaa32e9bfed9
    \`\`\`
 
 ### Step 3: Domain Configuration
