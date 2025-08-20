@@ -1,14 +1,11 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
 import "./globals.css"
-import { ThemeProvider } from "next-themes"
 import { Toaster } from "react-hot-toast"
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
+  title: "TranslateEvent V5",
+  description: "Sistema de tradução simultânea para eventos em tempo real",
   generator: "v0.app",
 }
 
@@ -18,13 +15,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className="dark">
       <head>
         <style>{`
 html {
-  font-family: ${GeistSans.style.fontFamily};
-  --font-sans: ${GeistSans.variable};
-  --font-mono: ${GeistMono.variable};
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
         `}</style>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -53,10 +48,10 @@ html {
         />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <div className="min-h-screen bg-background text-foreground">
           {children}
           <Toaster />
-        </ThemeProvider>
+        </div>
       </body>
     </html>
   )
