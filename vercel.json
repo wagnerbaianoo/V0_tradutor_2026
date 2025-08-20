@@ -12,11 +12,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-<<<<<<< HEAD
-          "value": "https://v0-repository-link-nu.vercel.app"
-=======
           "value": "*"
->>>>>>> 00fbeb209c81f778312fc1a9d0e625ea8dc3373c
         },
         {
           "key": "Access-Control-Allow-Methods",
@@ -32,7 +28,7 @@
   "rewrites": [
     {
       "source": "/sw.js",
-      "destination": "/sw.js"
+      "destination": "/public/sw.js"
     }
   ]
 }
