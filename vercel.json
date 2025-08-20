@@ -6,18 +6,6 @@
       "maxDuration": 30
     }
   },
-  "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
-    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
-    "DATABASE_URL": "@database_url",
-    "DIRECT_URL": "@direct_url",
-    "NEXTAUTH_SECRET": "@nextauth_secret",
-    "NEXTAUTH_URL": "https://translateevent-v5.vercel.app",
-    "NODE_ENV": "production",
-    "NEXT_PUBLIC_APP_URL": "https://translateevent-v5.vercel.app",
-    "FLUE_LIVE_SECRET": "@flue_live_secret"
-  },
   "headers": [
     {
       "source": "/api/(.*)",
@@ -41,20 +29,6 @@
     {
       "source": "/sw.js",
       "destination": "/public/sw.js"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/admin/(.*)",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": "(?!.*bot).*"
-        }
-      ],
-      "destination": "/login",
-      "statusCode": 302
     }
   ]
 }
