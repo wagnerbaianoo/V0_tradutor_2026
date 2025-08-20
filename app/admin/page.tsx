@@ -1,7 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/Card"
+import { useState, useEffect, useCallback } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 import { Badge } from "@/components/ui/Badge"
 import { BarChart3, Users, Radio, Activity, Globe } from "lucide-react"
@@ -10,6 +9,7 @@ import StreamManagement from "@/components/admin/StreamManagement"
 import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard"
 import UserManagement from "@/components/admin/UserManagement"
 import { createClient } from "@/lib/supabase/client"
+import { StatCard } from "@/components/admin/StatCard"
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -23,12 +23,7 @@ export default function AdminDashboard() {
   const [error, setError] = useState<string | null>(null)
   const supabase = createClient()
 
-  useEffect(() => {
-    loadDashboardStats()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const loadDashboardStats = async () => {
+  const loadDashboardStats = useCallback(async () => {
     try {
       setError(null)
       setLoading(true)
@@ -59,7 +54,37 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [supabase])
+
+  useEffect(() => {
+    loadDashboardStats()
+  }, [loadDashboardStats])
+
+  const statCards = [
+    {
+      title: "Total Eventos",
+      value: stats.totalEvents,
+      Icon: BarChart3,
+      iconBgColor: "bg-blue-500/20",
+      iconColor: "text-blue-400",
+    },
+    {
+      title: "Eventos Ativos",
+      value: stats.activeEvents,
+      Icon: Activity,
+      iconBgColor: "bg-green-500/20",
+      iconColor: "text-green-400",
+    },
+    { title: "Total Streams", value: stats.totalStreams, Icon: Radio, iconBgColor: "bg-purple-500/20", iconColor: "text-purple-400" },
+    {
+      title: "Tradutores Ativos",
+      value: stats.activeTranslators,
+      Icon: Globe,
+      iconBgColor: "bg-orange-500/20",
+      iconColor: "text-orange-400",
+    },
+    { title: "Total Usuários", value: stats.totalUsers, Icon: Users, iconBgColor: "bg-cyan-500/20", iconColor: "text-cyan-400" },
+  ]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -95,75 +120,9 @@ export default function AdminDashboard() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-500/20 rounded-lg">
-                  <BarChart3 className="w-5 h-5 text-blue-400" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-300">Total Eventos</p>
-                  <p className="text-2xl font-bold text-white">{loading ? "..." : stats.totalEvents}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-green-500/20 rounded-lg">
-                  <Activity className="w-5 h-5 text-green-400" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-300">Eventos Ativos</p>
-                  <p className="text-2xl font-bold text-white">{loading ? "..." : stats.activeEvents}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-purple-500/20 rounded-lg">
-                  <Radio className="w-5 h-5 text-purple-400" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-300">Total Streams</p>
-                  <p className="text-2xl font-bold text-white">{loading ? "..." : stats.totalStreams}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-orange-500/20 rounded-lg">
-                  <Globe className="w-5 h-5 text-orange-400" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-300">Tradutores Ativos</p>
-                  <p className="text-2xl font-bold text-white">{loading ? "..." : stats.activeTranslators}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-cyan-500/20 rounded-lg">
-                  <Users className="w-5 h-5 text-cyan-400" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-300">Total Usuários</p>
-                  <p className="text-2xl font-bold text-white">{loading ? "..." : stats.totalUsers}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          {statCards.map((card) => (
+            <StatCard key={card.title} {...card} loading={loading} />
+          ))}
         </div>
 
         {/* Main Content */}
