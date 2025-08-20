@@ -1,14 +1,14 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/Card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
+import { Badge } from "@/components/ui/Badge"
 import { BarChart3, Users, Radio, Activity, Globe } from "lucide-react"
-import { EventManagement } from "@/components/admin/event-management"
-import { StreamManagement } from "@/components/admin/stream-management"
-import { AnalyticsDashboard } from "@/components/admin/analytics-dashboard"
-import { UserManagement } from "@/components/admin/user-management"
+import EventManagement from "@/components/admin/EventManagement"
+import StreamManagement from "@/components/admin/StreamManagement"
+import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard"
+import UserManagement from "@/components/admin/UserManagement"
 import { createClient } from "@/lib/supabase/client"
 
 export default function AdminDashboard() {
