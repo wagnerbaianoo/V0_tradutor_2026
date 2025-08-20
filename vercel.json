@@ -5,11 +5,30 @@
     "app/api/**/route.ts": {
       "maxDuration": 30
     }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://v0-repository-link-nu.vercel.app"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    }
   ],
   "rewrites": [
     {
       "source": "/sw.js",
-      "destination": "/public/sw.js"
+      "destination": "/sw.js"
     }
   ]
 }
