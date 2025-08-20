@@ -1,6 +1,6 @@
 {
-  "buildCommand": "pnpm run build",
-  "installCommand": "pnpm install",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
   "functions": {
     "app/api/**/route.ts": {
       "maxDuration": 30
@@ -12,7 +12,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://v0-repository-link-nu.vercel.app/"
+          "value": "*"
         },
         {
           "key": "Access-Control-Allow-Methods",
