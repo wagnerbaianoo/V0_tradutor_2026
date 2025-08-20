@@ -9,7 +9,16 @@
     "db:migrate": "supabase migration up",
     "db:reset": "supabase db reset",
     "dev": "next dev",
-    "start": "next start"
+    "lint": "next lint",
+    "preview": "next build && next start",
+    "start": "next start",
+    "type-check": "tsc --noEmit"
+  },
+  "pnpm": {
+    "allowed-build-scripts": [
+      "supabase",
+      "@tailwindcss/oxide"
+    ]
   },
   "dependencies": {
     "@radix-ui/react-popover": "1.1.4",

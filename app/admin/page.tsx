@@ -1,13 +1,20 @@
 "use client"
 
+<<<<<<< HEAD
 import { useState, useEffect, useCallback } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 import { Badge } from "@/components/ui/Badge"
+=======
+import { useState, useEffect } from "react"
+import { Card, CardContent } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Badge } from "@/components/ui/badge"
+>>>>>>> 00fbeb209c81f778312fc1a9d0e625ea8dc3373c
 import { BarChart3, Users, Radio, Activity, Globe } from "lucide-react"
-import EventManagement from "@/components/admin/EventManagement"
-import StreamManagement from "@/components/admin/StreamManagement"
-import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard"
-import UserManagement from "@/components/admin/UserManagement"
+import { EventManagement } from "@/components/admin/event-management"
+import { StreamManagement } from "@/components/admin/stream-management"
+import { AnalyticsDashboard } from "@/components/admin/analytics-dashboard"
+import { UserManagement } from "@/components/admin/user-management"
 import { createClient } from "@/lib/supabase/client"
 import { StatCard } from "@/components/admin/StatCard"
 
@@ -20,37 +27,39 @@ export default function AdminDashboard() {
     totalUsers: 0,
   })
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const supabase = createClient()
 
+<<<<<<< HEAD
   const loadDashboardStats = useCallback(async () => {
+=======
+  useEffect(() => {
+    loadDashboardStats()
+  }, [])
+
+  const loadDashboardStats = async () => {
+>>>>>>> 00fbeb209c81f778312fc1a9d0e625ea8dc3373c
     try {
-      setError(null)
-      setLoading(true)
-      const [
-        { count: totalEvents },
-        { count: activeEvents },
-        { count: totalStreams },
-        { count: activeTranslators },
-        { count: totalUsers },
-      ] = await Promise.all([
-        supabase.from("events").select("*", { count: "exact", head: true }),
-        supabase.from("events").select("*", { count: "exact", head: true }).eq("is_active", true),
-        supabase.from("streams").select("*", { count: "exact", head: true }),
-        supabase.from("translation_channels").select("*", { count: "exact", head: true }).eq("is_active", true),
-        supabase.from("users").select("*", { count: "exact", head: true }),
+      const [eventsResult, streamsResult, translatorsResult, usersResult] = await Promise.all([
+        supabase.from("events").select("id, is_active"),
+        supabase.from("streams").select("id, enabled"),
+        supabase.from("translation_channels").select("id, is_active"),
+        supabase.from("users").select("id, role"),
       ])
 
+      const events = eventsResult.data || []
+      const streams = streamsResult.data || []
+      const translators = translatorsResult.data || []
+      const users = usersResult.data || []
+
       setStats({
-        totalEvents: totalEvents ?? 0,
-        activeEvents: activeEvents ?? 0,
-        totalStreams: totalStreams ?? 0,
-        activeTranslators: activeTranslators ?? 0,
-        totalUsers: totalUsers ?? 0,
+        totalEvents: events.length,
+        activeEvents: events.filter((e) => e.is_active).length,
+        totalStreams: streams.length,
+        activeTranslators: translators.filter((t) => t.is_active).length,
+        totalUsers: users.length,
       })
     } catch (error) {
       console.error("[v0] Error loading dashboard stats:", error)
-      setError("Falha ao carregar as estatísticas. Tente recarregar a página.")
     } finally {
       setLoading(false)
     }
@@ -107,17 +116,6 @@ export default function AdminDashboard() {
       </div>
 
       <div className="container mx-auto px-4 py-6">
-        {/* Error Message */}
-        {error && (
-          <div className="bg-red-500/20 text-red-300 border border-red-500/50 rounded-lg p-4 mb-8 flex items-center gap-3">
-            <Activity className="w-5 h-5" />
-            <div>
-              <p className="font-bold">Ocorreu um Erro</p>
-              <p className="text-sm">{error}</p>
-            </div>
-          </div>
-        )}
-
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           {statCards.map((card) => (
