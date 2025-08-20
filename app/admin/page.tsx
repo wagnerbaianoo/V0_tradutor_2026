@@ -20,32 +20,38 @@ export default function AdminDashboard() {
     totalUsers: 0,
   })
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const supabase = createClient()
 
   useEffect(() => {
     loadDashboardStats()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const loadDashboardStats = async () => {
     try {
-      const [eventsResult, streamsResult, translatorsResult, usersResult] = await Promise.all([
-        supabase.from("events").select("id, is_active"),
-        supabase.from("streams").select("id, enabled"),
-        supabase.from("translation_channels").select("id, is_active"),
-        supabase.from("users").select("id, role"),
+      setError(null)
+      setLoading(true)
+      const [
+        { count: totalEvents },
+        { count: activeEvents },
+        { count: totalStreams },
+        { count: activeTranslators },
+        { count: totalUsers },
+      ] = await Promise.all([
+        supabase.from("events").select("*", { count: "exact", head: true }),
+        supabase.from("events").select("*", { count: "exact", head: true }).eq("is_active", true),
+        supabase.from("streams").select("*", { count: "exact", head: true }),
+        supabase.from("translation_channels").select("*", { count: "exact", head: true }).eq("is_active", true),
+        supabase.from("users").select("*", { count: "exact", head: true }),
       ])
 
-      const events = eventsResult.data || []
-      const streams = streamsResult.data || []
-      const translators = translatorsResult.data || []
-      const users = usersResult.data || []
-
       setStats({
-        totalEvents: events.length,
-        activeEvents: events.filter((e) => e.is_active).length,
-        totalStreams: streams.length,
-        activeTranslators: translators.filter((t) => t.is_active).length,
-        totalUsers: users.length,
+        totalEvents: totalEvents ?? 0,
+        activeEvents: activeEvents ?? 0,
+        totalStreams: totalStreams ?? 0,
+        activeTranslators: activeTranslators ?? 0,
+        totalUsers: totalUsers ?? 0,
       })
     } catch (error) {
       console.error("[v0] Error loading dashboard stats:", error)
