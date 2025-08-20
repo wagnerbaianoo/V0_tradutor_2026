@@ -55,6 +55,7 @@ export default function AdminDashboard() {
       })
     } catch (error) {
       console.error("[v0] Error loading dashboard stats:", error)
+      setError("Falha ao carregar as estatísticas. Tente recarregar a página.")
     } finally {
       setLoading(false)
     }
@@ -81,6 +82,17 @@ export default function AdminDashboard() {
       </div>
 
       <div className="container mx-auto px-4 py-6">
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-500/20 text-red-300 border border-red-500/50 rounded-lg p-4 mb-8 flex items-center gap-3">
+            <Activity className="w-5 h-5" />
+            <div>
+              <p className="font-bold">Ocorreu um Erro</p>
+              <p className="text-sm">{error}</p>
+            </div>
+          </div>
+        )}
+
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           <Card className="bg-white/10 backdrop-blur-sm border-white/20">
